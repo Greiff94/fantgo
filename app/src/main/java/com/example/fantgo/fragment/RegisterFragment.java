@@ -33,51 +33,51 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_register);
-
-        usernameEditText = findViewById(R.id.newUser);
-        passwordEditText = findViewById(R.id.newPassword);
-        emailEditText = findViewById(R.id.newEmail);
-        registerButton = findViewById(R.id.register);
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(usernameEditText.getText().toString().length() == 0 ||
-                        passwordEditText.getText().toString().length() == 0)
-                {
-                    //something
-                }else{
-                    registerUser();
-                }
-            }
-        });
-    }
-
-    public void registerUser()
-    {
-        final String uid = usernameEditText.getText().toString();
-        final String pwd = passwordEditText.getText().toString();
-        final String email = emailEditText.getText().toString();
-
-        FantInterface api = APIClient.getClient().create(FantInterface.class);
-
-        Call<ResponseBody> call = api.registerUser(uid, pwd, email);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(com.example.fantgo.fragment.RegisterFragment.this, "Succesfull registration", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(com.example.fantgo.fragment.RegisterFragment.this, "u suck", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_register);
+//
+//        usernameEditText = findViewById(R.id.ruid);
+//        passwordEditText = findViewById(R.id.rpwd);
+//        emailEditText = findViewById(R.id.remail);
+//        registerButton = findViewById(R.id.rbutton);
+//
+//        registerButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(usernameEditText.getText().toString().length() == 0 ||
+//                        passwordEditText.getText().toString().length() == 0)
+//                {
+//                    //something
+//                }else{
+//                    registerUser();
+//                }
+//            }
+//        });
+//    }
+//
+//    public void registerUser()
+//    {
+//        final String uid = usernameEditText.getText().toString();
+//        final String pwd = passwordEditText.getText().toString();
+//        final String email = emailEditText.getText().toString();
+//
+//        FantInterface api = APIClient.getClient().create(FantInterface.class);
+//
+//        Call<ResponseBody> call = api.registerUser(uid, pwd, email);
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                Toast.makeText(com.example.fantgo.fragment.RegisterFragment.this, "Succesfull registration", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Toast.makeText(com.example.fantgo.fragment.RegisterFragment.this, "u suck", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
 }
