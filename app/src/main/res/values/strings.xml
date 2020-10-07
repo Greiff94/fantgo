@@ -7,4 +7,6 @@
     <string name="action_rbutton">Register</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_username">User name</string>
+    <string name="prompt_gotologin">Already have an user, click here to logg in</string>
 </resources>

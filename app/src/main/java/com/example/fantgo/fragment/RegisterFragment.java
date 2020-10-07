@@ -18,6 +18,7 @@ import retrofit2.Response;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fantgo.R;
 import com.example.fantgo.retrofit.APIClient;
@@ -29,6 +30,7 @@ public class RegisterFragment extends Fragment {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText emailEditText;
+
 
     @Nullable
     @Override
@@ -48,11 +50,20 @@ public class RegisterFragment extends Fragment {
                     case R.id.rbutton:
                         userSignUp();
                         break;
+                    case R.id.rchangescene:
+                        changeToLogin();
+                        break;
                 }
 
             }
         });
         return view;
+    }
+
+    private void changeToLogin() {
+        Fragment fragment = new LoginFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment).commit();
     }
 
     private void userSignUp() {
