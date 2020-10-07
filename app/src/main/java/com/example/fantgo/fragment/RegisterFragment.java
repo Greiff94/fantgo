@@ -24,11 +24,10 @@ import com.example.fantgo.retrofit.APIClient;
 import com.example.fantgo.retrofit.FantInterface;
 
 
-public class RegisterFragment extends Fragment implements View.OnClickListener {
+public class RegisterFragment extends Fragment {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private EditText password2EditText;
     private EditText emailEditText;
 
     @Nullable
@@ -59,7 +58,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private void userSignUp() {
         String uid = usernameEditText.getText().toString().trim();
         String pwd = passwordEditText.getText().toString().trim();
-        String pwd2 = password2EditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
 
         if (uid.isEmpty()) {
@@ -84,12 +82,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             passwordEditText.requestFocus();
             return;
         }
-        if (pwd != pwd2) {
-            passwordEditText.setError("Passwords must match!");
-            passwordEditText.requestFocus();
-            password2EditText.requestFocus();
-            return;
-        }
+
 
         // if all requirements are valid, sign up the user through the api.
 
@@ -98,9 +91,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Activity rAct = getActivity();
-                String s = response.body().toString();
-                Toast.makeText(rAct, s, Toast.LENGTH_SHORT).show();
+                if(response.body()!=null) {
+                    Activity rAct = getActivity();
+                    String s = response.body().toString();
+                    Toast.makeText(rAct, s, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -112,8 +107,4 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 }
