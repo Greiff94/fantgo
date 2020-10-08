@@ -1,24 +1,33 @@
 package com.example.fantgo.model;
 
 public class Item {
-    private String name;
+    private int id;
+    private String itemName;
     private String description;
     private int price;
-    private String imageURL;
+    private boolean sold;
+    private int userid;
 
-    public Item(String name, String description, int price, String imageURL) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.imageURL = imageURL;
+    public Item(String itemName, String description, int price){
+    this.itemName = itemName;
+    this.price = price;
+    this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getDescription() {
@@ -37,11 +46,21 @@ public class Item {
         this.price = price;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public boolean isSold() {
+        return sold;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 }
+
+

@@ -19,6 +19,8 @@ import com.example.fantgo.model.User;
 import com.example.fantgo.retrofit.APIClient;
 import com.example.fantgo.retrofit.FantInterface;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,14 +75,20 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
-                    user.setJwt(response.body().toString());
-                    Activity rAct = getActivity();
-                    String s = response.body().toString();
-                    System.out.println(s);
-                    Toast.makeText(rAct, "logged in!", Toast.LENGTH_SHORT).show();
-                    Fragment fragment = new RegisterFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment).commit();
+                    try {
+                        String jwt = response.body().string();
+                        user.setJwt(jwt);
+                        Activity rAct = getActivity();
+                        System.out.println("this is the token: " +jwt);
+                        Toast.makeText(rAct, "logged in!", Toast.LENGTH_SHORT).show();
+                        Fragment fragment = new RegisterFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment).commit();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
                     Toast.makeText(getActivity(), "loggin failed", Toast.LENGTH_SHORT).show();
                 }

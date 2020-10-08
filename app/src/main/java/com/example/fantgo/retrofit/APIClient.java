@@ -17,7 +17,7 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.18.37.193:8080/fant/api/")
+                .baseUrl("http://10.22.195.54:8080/fant/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
