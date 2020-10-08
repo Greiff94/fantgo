@@ -28,7 +28,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
 
     public ItemListAdapter(Context context){
         this.context = context;
-
     }
 
     @NonNull
@@ -41,18 +40,19 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtName.setText(items.get(position).getName());
+        holder.txtName.setText(items.get(position).getItemName());
+        holder.txtPrice.setText("Price: " +items.get(position).getPrice() + "kr");
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,items.get(position).getName() + "selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,items.get(position).getItemName() + "selected", Toast.LENGTH_SHORT).show();
 
             }
         });
 
         Glide.with(context)
                 .asBitmap()
-                .load(items.get(position).getImageURL())
+                .load("https://picsum.photo/200")
                 .into(holder.image);
     }
 
@@ -78,5 +78,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
             txtPrice = itemView.findViewById(R.id.txtPrice);
             image = itemView.findViewById(R.id.image);
         }
+    }
+
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
     }
 }

@@ -18,6 +18,7 @@ import com.example.fantgo.R;
 import com.example.fantgo.model.User;
 import com.example.fantgo.retrofit.APIClient;
 import com.example.fantgo.retrofit.FantInterface;
+import com.example.fantgo.storage.UserPrefs;
 
 import java.io.IOException;
 
@@ -30,21 +31,20 @@ public class LoginFragment extends Fragment {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private static User user = new User();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-            usernameEditText = view.findViewById(R.id.luid);
-            passwordEditText = view.findViewById(R.id.lpwd);
+        usernameEditText = view.findViewById(R.id.luid);
+        passwordEditText = view.findViewById(R.id.lpwd);
 
         Button lbutton = (Button) view.findViewById(R.id.lbutton);
         lbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.lbutton:
                         userLogin();
                         break;
@@ -57,6 +57,8 @@ public class LoginFragment extends Fragment {
     private void userLogin() {
         String uid = usernameEditText.getText().toString().trim();
         String pwd = passwordEditText.getText().toString().trim();
+
+        final UserPrefs userPrefs = new UserPrefs(getContext());
 
         if (uid.isEmpty()) {
             usernameEditText.setError("Please enter a username");
@@ -74,14 +76,12 @@ public class LoginFragment extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     try {
-                        String jwt = response.body().string();
-                        user.setJwt(jwt);
+                        userPrefs.setToken(response.body().string());
                         Activity rAct = getActivity();
-                        System.out.println("this is the token: " +jwt);
                         Toast.makeText(rAct, "logged in!", Toast.LENGTH_SHORT).show();
-                        Fragment fragment = new RegisterFragment();
+                        Fragment fragment = new ItemsFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, fragment).commit();
                     } catch (IOException e) {

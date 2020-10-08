@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.fantgo.fragment.AddItemFragment;
+import com.example.fantgo.fragment.ItemsFragment;
 import com.example.fantgo.fragment.LoginFragment;
 import com.example.fantgo.fragment.RegisterFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new LoginFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_login);
@@ -46,7 +48,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
+
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ItemsFragment()).commit();
+                break;
+
+            case R.id.nav_newitem:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AddItemFragment()).commit();
+                break;
+
             case R.id.nav_login:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new LoginFragment()).commit();
@@ -61,11 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public void updateData() {
+
+    }
+
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
