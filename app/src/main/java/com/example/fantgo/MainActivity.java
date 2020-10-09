@@ -11,16 +11,19 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.fantgo.fragment.AddItemFragment;
 import com.example.fantgo.fragment.ItemsFragment;
 import com.example.fantgo.fragment.LoginFragment;
 import com.example.fantgo.fragment.RegisterFragment;
+import com.example.fantgo.storage.UserPrefs;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private Menu navMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        navMenu = navigationView.getMenu();
+        updateOnStartUp();
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -69,14 +75,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RegisterFragment()).commit();
                 break;
+
+            case R.id.nav_logout:
+                UserPrefs userPrefs = new UserPrefs(this);
+                userPrefs.setToken("");
+                finish();
+                startActivity(getIntent());
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void updateData() {
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -85,6 +95,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void updateOnStartUp() {
+
+        UserPrefs userPrefs = new UserPrefs(getApplicationContext());
+
+
+        if (userPrefs.getToken().isEmpty()) {
+            navMenu.findItem(R.id.nav_home).setVisible(true);
+            navMenu.findItem(R.id.nav_login).setVisible(true);
+            navMenu.findItem(R.id.nav_register).setVisible(true);
+            navMenu.findItem(R.id.nav_newitem).setVisible(false);
+            // navMenu.findItem(R.id.nav_logout).setVisible(false);
+        } else {
+            navMenu.findItem(R.id.nav_home).setVisible(true);
+            navMenu.findItem(R.id.nav_login).setVisible(false);
+            navMenu.findItem(R.id.nav_register).setVisible(false);
+            navMenu.findItem(R.id.nav_newitem).setVisible(true);
+            //  navMenu.findItem(R.id.nav_logout).setVisible(true);
+        }
+
     }
 
 }

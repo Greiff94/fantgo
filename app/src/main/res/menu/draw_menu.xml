@@ -20,6 +20,12 @@
             android:id="@+id/nav_register"
             android:icon="@drawable/ic_register"
             android:title="New user" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logginn"
+            android:title="Logg out"/>
+
     </group>
 
 </menu>
