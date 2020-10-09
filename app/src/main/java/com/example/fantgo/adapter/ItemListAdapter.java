@@ -52,7 +52,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
 
         Glide.with(context)
                 .asBitmap()
-                .load("https://picsum.photo/200")
+                .load("https://picsum.photos/200")
                 .into(holder.image);
     }
 

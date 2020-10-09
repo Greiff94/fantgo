@@ -18,6 +18,9 @@ import com.example.fantgo.model.Item;
 import com.example.fantgo.retrofit.APIClient;
 import com.example.fantgo.retrofit.FantInterface;
 import com.example.fantgo.storage.UserPrefs;
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
+import org.w3c.dom.ls.LSOutput;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,16 +61,15 @@ public class AddItemFragment extends Fragment {
         final int price = Integer.parseInt(editItemPrice.getText().toString());
 
         UserPrefs userPrefs = new UserPrefs(getContext());
-
+        String token = "Bearer " + userPrefs.getToken();
         FantInterface fantAPI = APIClient.getClient().create(FantInterface.class);
-       // Item item = new Item(itemName, itemDesc, price);
-       // Call<Item> call = fantAPI.addItem(userPrefs.getToken(), item);
-        Call<Item> call = fantAPI.addItem(userPrefs.getToken(), itemName, itemDesc, price);
+        Call<Item> call = fantAPI.addItem(token, itemName, itemDesc, price);
         call.enqueue(new Callback<Item>() {
             @Override
             public void onResponse(Call<Item> call, Response<Item> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "You have successfully added item!", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getContext(), "Item added!", Toast.LENGTH_SHORT).show();
                     Fragment newFragment = new ItemsFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, newFragment).commit();
@@ -90,7 +92,5 @@ public class AddItemFragment extends Fragment {
         editItemDesc = view.findViewById(R.id.editItemDesc);
         editItemPrice = view.findViewById(R.id.editItemPrice);
         btnAddItem = view.findViewById(R.id.btnAddItem);
-
-        //editTextPrice.setInputType(InputType.TYPE_CLASS_NUMBER);
     }
 }

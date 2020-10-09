@@ -50,11 +50,16 @@ public class RegisterFragment extends Fragment {
                     case R.id.rbutton:
                         userSignUp();
                         break;
-                    case R.id.rchangescene:
-                        changeToLogin();
-                        break;
                 }
 
+            }
+
+                });
+        Button logbutton = (Button) view.findViewById(R.id.rchangescene);
+        logbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeToLogin();
             }
         });
         return view;
